@@ -1,0 +1,99 @@
+- Memory usage
+ - Point connected to 2 polylines
+  - 16-bit version
+   - 2*2 bytes of data in each polyline with pointer to list of nodes
+   - 2*2 bytes of coordinates, 2-byte pointer to metadata and 2*2 bytes per polyline of pointer data in metadata
+   - Total 14 bytes
+   - 4 gigs of RAM can fit over 300 million of these, or 10% of all OpenStreetMap nodes
+  - 32-bit version (speculative)
+   - 4*4 bytes of linked list entries in both polylines (contain pointer to node data)
+   - 2*4 bytes of coordinates and 2*4 bytes per polyline of pointer data in metadata
+   - Malloc overhead for linked list entry and node data
+   - Total min. 32 bytes
+  - Double version on 64-bit platform
+   - 4*8 bytes of linked list entries in both polylines (contain pointer to node data)
+   - 2*8 bytes of coordinates and 2*8 bytes per polyline of pointer data in metadata
+   - Malloc overhead for linked list entry and node data
+   - Total min. 64 bytes
+
+
+
+- Quadtree per layer, per-layer representation setting double vs 16-bit
+
+
+
+- Tile
+ - Two different representations
+  - Double
+   - Accurately represent anything
+  - 16-bit int
+   - Only for tiles with sides under 3km
+   - Min. 10cm precision, coordinate range 0-32767 within tile bounds
+ - Contents
+  - Flags
+   - Which representation is in use
+   - Whether contents are data or child tiles
+  - Bounding box
+  - Points
+   - Either connected to zero or more than one polyline, or have metadata besides connections
+  - Polylines (can be polygon outlines)
+
+- Bounding box
+ - Uses double or int32 (latter allows bit twiddles)
+
+- Point
+ - Simply a coordinate pair
+ - Two different representations
+  - Double
+  - 16-bit int
+   - Each coordinate pair can contain 2 bits of extra info
+    - Flag if the point is actually a node
+     - May have metadata
+     - May connect multiple polylines
+     - Pointer to list of nodes within same tile
+     - Another 16-bit value is unused??? Maybe use for distance along polyline from previous point
+    - Extra flag usable by traversal algorithms
+
+- Node
+ - Coordinate pair
+ - Pointer to metadata
+
+- Polyline
+ - Flags
+  - Which representation is in use
+  - Is actually a filled polygon
+ - Two different representations
+  - Double
+   - Linked list of points?
+   - Also store length
+  - 16-bit int
+   - No coordinate data directly in polyline info (just length)
+   - Pointer to first and last tile and index of polyline within them
+   - Data divided to fragments within tiles
+    - May represent a fragment of a longer polyline
+    - Fragments of polylines fall inside a single tile, with endpoints possibly outside it
+     - Pointer to polyline description
+     - First and last point inside or outside the tile
+      - In double representation, indices or pointers to linked list items
+      - In 16-bit representation, indices followed by data of points in between
+       - Line endpoints may be outside tile, how to represent?
+        - Flag in the corresponding index tells if point has custom representation
+        - Maybe number of containing tile and index within?
+         - Number of containing tile should be an indirect reference... This allows more than 32k total tiles by using a per-tile table of pointers to other tiles
+         - Index could refer to a polyline and a flag could say which end (it will be 2nd or second to last point since the endpoint crossed to another tile)
+
+- Polyline metadata
+ - Arbitrary key-value pair
+
+- Node metadata
+ - Two different representations
+  - Pointer / uintptr_t
+  - 16-bit int
+   - 2 bits indicate type and whether more data follows
+   - Arbitrary key-value pair, value can be an XML structure (14 + 16 bits, both are indices to a string table)
+   - Pointer to a polyline and index along it (14 + 16 bits)
+    - Polyline may be in double representation! Then its reference is in binary format in the string table, and a special polyline number is used
+
+- String table
+ - For arbitrary key-value pairs
+ - Keys sorted before values to ensure they fit in less bits
