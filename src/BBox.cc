@@ -116,12 +116,12 @@ NBIND_CLASS(BBox<double>, BBox) {
 	getter(getNE);
 
 //	method(sqDistTo);
-	method(getRegion, Overloaded<unsigned int (double, double) const>());
+	multimethod(getRegion, args(double, double));
 
 	method(intersects);
-	method(contains, Overloaded<bool (const BBox<double> &) const>());
+	multimethod(contains, args(const BBox<double> &));
 
-	method(extend, Overloaded<void (double, double)>());
+	multimethod(extend, args(double, double));
 }
 
 NBIND_CLASS(BBox<uint32_t>, BBoxInt) {
@@ -131,9 +131,9 @@ NBIND_CLASS(BBox<uint32_t>, BBoxInt) {
 	getter(getNE);
 
 //	method(sqDistTo);
-	method(getRegion, Overloaded<unsigned int (uint32_t, uint32_t) const>());
+	multimethod(getRegion, args(uint32_t, uint32_t));
 
 	method(intersects);
 
-	method(extend, Overloaded<void (uint32_t, uint32_t)>());
+	multimethod(extend, args(uint32_t, uint32_t));
 }
