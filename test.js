@@ -23,6 +23,15 @@ var y1 = bbox.SW.y;
 var x2 = bbox.NE.x;
 var y2 = bbox.NE.y;
 
+bbox.SW.constructor.prototype.toString = function() {
+	return(this.x + ', ' + this.y);
+}
+
+console.log(x1);
+console.log(y1);
+console.log(x2);
+console.log(y2);
+
 // Test points intersect all regions, edge segments and edge intersections
 // in the diagram on the right.
 
@@ -45,8 +54,8 @@ for(var num = 0; num < testList.length; ++num) {
 }
 
 // console.log(bbox.sqDistTo(new lib.Coord(0, 0)));
-console.log(bbox.SW);
+console.log('' + bbox.SW);
 
 bbox.extend(0, 0);
 
-console.log(bbox.SW);
+console.log('' + bbox.SW);

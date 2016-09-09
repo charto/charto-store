@@ -10,7 +10,7 @@
     "copyasm": "copyasm",
 
     "test": "node-gyp configure build",
-    "test-asm": "node-gyp configure build --asmjs=1"
+    "test-asm": "rm -rf build && node-gyp configure build --asmjs=1 && node test.js"
   },
   "author": "Juha Järvi",
   "license": "MIT",

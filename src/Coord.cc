@@ -11,8 +11,18 @@ template class charto::Coord<uint32_t>;
 
 NBIND_CLASS(Coord<double>, Coord) {
 	construct<double, double>();
+
+	getset(getX, setX);
+	getset(getY, setY);
+	getset(getLat, setLat);
+	getset(getLon, setLon);
 }
 
 NBIND_CLASS(Coord<uint32_t>, CoordInt) {
 	construct<double, double>();
+
+	getset(getX, setX);
+	getset(getY, setY);
+	getset(getLat, setLat);
+	getset(getLon, setLon);
 }
