@@ -18,12 +18,12 @@ lib.test();
 var bbox = new lib.BBox(1, 2, 3, 4);
 var bboxInt = new lib.BBoxInt(1, 2, 3, 4);
 
-var x1 = bbox.SW.x;
-var y1 = bbox.SW.y;
-var x2 = bbox.NE.x;
-var y2 = bbox.NE.y;
+var x1 = bbox.sw.x;
+var y1 = bbox.sw.y;
+var x2 = bbox.ne.x;
+var y2 = bbox.ne.y;
 
-bbox.SW.constructor.prototype.toString = function() {
+bbox.sw.constructor.prototype.toString = function() {
 	return(this.x + ', ' + this.y);
 }
 
@@ -54,8 +54,10 @@ for(var num = 0; num < testList.length; ++num) {
 }
 
 // console.log(bbox.sqDistTo(new lib.Coord(0, 0)));
-console.log('' + bbox.SW);
+console.log('' + bbox.sw);
 
 bbox.extend(0, 0);
 
-console.log('' + bbox.SW);
+console.log('' + bbox.sw);
+
+console.log(new lib.Node(12, 34).xy);

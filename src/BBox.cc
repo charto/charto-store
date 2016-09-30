@@ -115,8 +115,8 @@ using namespace nbind;
 NBIND_CLASS(BBox<double>, BBox) {
 	construct<double, double, double, double>();
 
-	getter(getSW);
-	getter(getNE);
+	getter(getSW, "sw");
+	getter(getNE, "ne");
 
 //	method(sqDistTo);
 	multimethod(getRegion, args(double, double));
@@ -130,8 +130,8 @@ NBIND_CLASS(BBox<double>, BBox) {
 NBIND_CLASS(BBox<uint32_t>, BBoxInt) {
 	construct<uint32_t, uint32_t, uint32_t, uint32_t>();
 
-	getter(getSW);
-	getter(getNE);
+	getter(getSW, "sw");
+	getter(getNE, "ne");
 
 //	method(sqDistTo);
 	multimethod(getRegion, args(uint32_t, uint32_t));
