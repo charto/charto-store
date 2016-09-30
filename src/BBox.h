@@ -1,3 +1,6 @@
+// This file is part of charto-store, copyright (C) 2016 BusFaster Ltd.
+// Released under the MIT license, see LICENSE.
+
 #pragma once
 
 #include "Coord.h"
