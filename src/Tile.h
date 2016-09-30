@@ -5,9 +5,11 @@
 
 #include <cstdint>
 #include <memory>
+#include <vector>
 #include <array>
 
 #include "BBox.h"
+#include "Node.h"
 
 namespace charto {
 
@@ -33,9 +35,13 @@ inline TileChildPos operator- (TileChildPos a, TileChildPos b) {
 	));
 }
 
+template <typename Unit, typename Small>
 struct TileData {
 //	Vector<path::NodeSeq::Part> seqList;
-//	Vector<path::Node *> nodeList;
+
+	std::vector<Node<Unit> *> nodeList;
+
+	/** Includes all points, solitary and along polylines. */
 	uint32_t pointCount;
 };
 
@@ -84,7 +90,7 @@ private:
 
 	union {
 		std::array<std::unique_ptr<Tile>, 4> childList;
-		TileData data;
+		TileData<Unit, Small> data;
 	};
 
 	bool isLeafFlag = true;
