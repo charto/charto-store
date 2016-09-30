@@ -13,6 +13,7 @@ template class charto::Coord<uint32_t>;
 #include "nbind/nbind.h"
 
 NBIND_CLASS(Coord<double>, Coord) {
+	construct<>();
 	construct<double, double>();
 
 	getset(getX, setX);
@@ -22,7 +23,8 @@ NBIND_CLASS(Coord<double>, Coord) {
 }
 
 NBIND_CLASS(Coord<uint32_t>, CoordInt) {
-	construct<double, double>();
+	construct<>();
+	construct<uint32_t, uint32_t>();
 
 	getset(getX, setX);
 	getset(getY, setY);

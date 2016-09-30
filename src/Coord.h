@@ -14,7 +14,8 @@ class Coord {
 
 public:
 
-	explicit Coord(Unit x = 0, Unit y = 0) : x(x), y(y) {}
+	Coord() : x(0), y(0) {}
+	Coord(Unit x, Unit y) : x(x), y(y) {}
 
 	bool operator==(const Coord &other) const {
 		return(x == other.x && y == other.y);
