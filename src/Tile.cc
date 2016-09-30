@@ -2,40 +2,43 @@
 
 using namespace charto;
 
-BBox<Big> Tile :: getChildBounds(TilePos pos) const {
-	const BBox<double> &bboxChild = getBounds();
-	const Coord<double> &xy1 = bboxChild.getSW();
-	const Coord<double> &xy2 = bboxChild.getNE();
-	Coord<double> center = bboxChild.getCenter();
+template <typename BigUnit, typename SmallUnit>
+BBox<BigUnit> Tile<BigUnit, SmallUnit> :: getChildBounds(TileChildPos pos) const {
+	const BBox<Unit> &bboxChild = getBounds();
+	const Coord<Unit> &xy1 = bboxChild.getSW();
+	const Coord<Unit> &xy2 = bboxChild.getNE();
+	Coord<Unit> center = bboxChild.getCenter();
 
 	switch(pos) {
-		case TilePos::SW: return(BBox<double>(xy1, center));
-		case TilePos::SE: return(BBox<double>(xy1.x, center.y, center.x, xy2.y));
-		case TilePos::NW: return(BBox<double>(center.x, xy1.y, xy2.x, center.y));
-		case TilePos::NE: return(BBox<double>(center, xy2));
+		case TileChildPos::SW: return(BBox<Unit>(xy1, center));
+		case TileChildPos::SE: return(BBox<Unit>(xy1.x, center.y, center.x, xy2.y));
+		case TileChildPos::NW: return(BBox<Unit>(center.x, xy1.y, xy2.x, center.y));
+		case TileChildPos::NE: return(BBox<Unit>(center, xy2));
 	}
 }
 
-TileChildPos TileBase :: getChildPosAt(double x, double y) {
-	Coord<double> center = bbox.getCenter();
-	unsigned int childPos;
+template <typename BigUnit, typename SmallUnit>
+TileChildPos Tile<BigUnit, SmallUnit> :: getChildPosAt(Unit x, Unit y) const {
+	Coord<Unit> center = bbox.getCenter();
+	TileChildPos childPos;
 
-    // TODO: Use bit twiddling to extract sign bits of x and y comparisons
-    // avoiding all if statements?
-    if(query.x>=xSplit) childPos=ChildPos::NW;
-    else childPos=ChildPos::SW;
+	if(x >= center.x) childPos = TileChildPos::NW;
+	else childPos = TileChildPos::SW;
 
-    if(query.y>=ySplit) util::EnumMath(&childPos)+=util::EnumMath(ChildPos::SE)-ChildPos::SW;
+	if(y >= center.y) childPos = childPos + (TileChildPos::SE - TileChildPos::SW);
 
-//  printf("Child %d\n",childPos);
-
-    return(childPos);
+	return(static_cast<TileChildPos>(childPos));
 }
 
-template class charto::Tile<uint32_t, uint16_t>;
+
 template class charto::Tile<double, double>;
+template class charto::Tile<uint32_t, uint16_t>;
+
+typedef Tile<double, double> BigTile;
+typedef Tile<uint32_t, uint16_t> SmallTile;
 
 #include "nbind/nbind.h"
 
-NBIND_CLASS(Tile<double>, Tile) {
-}
+NBIND_CLASS(BigTile, Tile) {}
+
+NBIND_CLASS(SmallTile) {}

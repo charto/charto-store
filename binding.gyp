@@ -7,6 +7,8 @@
 			"sources": [
 				"src/Coord.cc",
 				"src/BBox.cc",
+				"src/Tile.cc",
+				"src/QuadTree.cc",
 				"src/test.cc"
 			]
 		}

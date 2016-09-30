@@ -11,13 +11,15 @@ public:
 
 	typedef typename Member::Unit Unit;
 
-	explicit QuadTree(const BBox<Unit> &bbox) : bbox(bbox) {}
+	explicit QuadTree(const BBox<Unit> &bbox) : bbox(bbox), root(new Member(bbox)) {}
+
+	explicit QuadTree(BBox<Unit> &&bbox) : bbox(bbox), root(new Member(bbox)) {}
 
 private:
 
-	Member *root;
-
 	BBox<Unit> bbox;
+
+	std::unique_ptr<Member> root;
 
 };
 
