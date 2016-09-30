@@ -10,8 +10,9 @@
     "copyasm": "copyasm",
     "ndts": "ndts",
 
-    "test": "rm -rf build && node-gyp configure build && node test.js",
-    "test-asm": "rm -rf build && node-gyp configure build --asmjs=1 && node test.js"
+    "config-test": "autogypi -c test/autogypi.json",
+    "test":     "npm run config-test && cd test/v8 && node-gyp configure build && node ../test.js v8",
+    "test-asm": "npm run config-test && cd test/em && node-gyp configure build --asmjs=1 && node ../test.js em"
   },
   "author": "Juha Järvi",
   "license": "MIT",

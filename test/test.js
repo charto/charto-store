@@ -1,5 +1,6 @@
+var path = require('path');
 var nbind = require('nbind');
-var binding = nbind.init(__dirname);
+var binding = nbind.init(path.resolve(__dirname, process.argv[2]));
 var lib = binding.lib;
 
 function Coord(x, y) {

@@ -6,3 +6,5 @@ dist/
 *.tgz
 
 auto*.gypi
+test/em/*/
+test/v8/*/
