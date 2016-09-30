@@ -1,5 +1,5 @@
 var nbind = require('nbind');
-var binding = nbind.init();
+var binding = nbind.init(__dirname);
 var lib = binding.lib;
 
 function Coord(x, y) {
