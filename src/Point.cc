@@ -3,23 +3,23 @@
 
 #include <cstdint>
 
-#include "Node.h"
+#include "Point.h"
 
 using namespace charto;
 
-template class charto::Node<double>;
-template class charto::Node<uint32_t>;
+template class charto::Point<double>;
+template class charto::Point<uint32_t>;
 
 #include "nbind/nbind.h"
 
-NBIND_CLASS(Node<double>, Node) {
-	inherit(Point<double>);
-
+NBIND_CLASS(Point<double>, Point) {
 	construct<double, double>();
+
+	getter(getXY, "xy");
 }
 
-NBIND_CLASS(Node<uint32_t>, NodeInt) {
-	inherit(Point<uint32_t>);
-
+NBIND_CLASS(Point<uint32_t>, PointInt) {
 	construct<uint32_t, uint32_t>();
+
+	getter(getXY, "xy");
 }

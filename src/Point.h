@@ -3,17 +3,22 @@
 
 #pragma once
 
-#include "Point.h"
+#include "Coord.h"
 
 namespace charto {
 
 template <typename Unit>
-class Node : public Point<Unit> {
+class Point {
 
 public:
 
-	Node(Unit x, Unit y) : Point<Unit>(x, y) {}
+	Point(Unit x, Unit y) : xy(x, y) {}
 
+	const Coord<Unit> &getXY() const { return(xy); }
+
+protected:
+
+	Coord<Unit> xy;
 };
 
 } // namespace

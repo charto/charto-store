@@ -6,6 +6,7 @@
 		"Coord.cc",
 		"BBox.cc",
 
+		"Point.cc",
 		"Node.cc",
 
 		"Tile.cc",
