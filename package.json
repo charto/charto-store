@@ -9,6 +9,7 @@
     "emcc-path": "emcc-path",
     "copyasm": "copyasm",
     "ndts": "ndts",
+    "tsc": "tsc",
 
     "config-test": "autogypi -c test/autogypi.json",
     "test":     "npm run config-test && cd test/v8 && node-gyp configure build && node ../test.js v8",

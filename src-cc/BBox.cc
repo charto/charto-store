@@ -98,11 +98,13 @@ bool BBox<Unit> :: contains(const BBox &other) const {
 }
 
 template <typename Unit>
-void BBox<Unit> :: extend(Unit x, Unit y) {
+BBox<Unit> &BBox<Unit> :: extend(Unit x, Unit y) {
 	if(x < sw.x) sw.x = x;
 	if(y < sw.y) sw.y = y;
 	if(x > ne.x) ne.x = x;
 	if(y > ne.y) ne.y = y;
+
+	return(*this);
 }
 
 template class charto::BBox<double>;

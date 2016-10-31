@@ -76,8 +76,8 @@ public:
 		return(contains(xy.x, xy.y));
 	}
 
-	void extend(Unit x, Unit y);
-	void extend(const Coord<Unit> &xy) { extend(xy.x, xy.y); }
+	BBox<Unit> &extend(Unit x, Unit y);
+	BBox<Unit> &extend(const Coord<Unit> &xy) { return(extend(xy.x, xy.y)); }
 
 private:
 

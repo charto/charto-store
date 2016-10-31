@@ -1,6 +1,6 @@
 {
 	"includes": [
-		"../src/store.gypi"
+		"../src-cc/store.gypi"
 	],
 	"sources": [
 		"test.cc"
